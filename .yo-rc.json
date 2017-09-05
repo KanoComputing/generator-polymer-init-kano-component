@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Kano Computing Ltd.",
+      "authorEmail": "dev@kano.me",
+      "authorUrl": ""
+    }
+  }
+}
