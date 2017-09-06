@@ -1,6 +1,6 @@
 {
   "name": "generator-polymer-init-kano-component",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Polymer component with integration to Kano's test and build pipeline",
   "homepage": "",
   "author": {

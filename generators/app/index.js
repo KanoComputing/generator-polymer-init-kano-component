@@ -56,6 +56,12 @@ module.exports = class extends Generator {
       this.props
     );
 
+    // Copy dotfiles
+    this.fs.copy(
+      `${this.templatePath()}/${version}/.*`,
+      this.destinationRoot()
+    );
+
     this.fs.copyTpl(
       `${this.templatePath()}/${version}/_element.html`,
       this.destinationPath(`${elementName}.html`),
