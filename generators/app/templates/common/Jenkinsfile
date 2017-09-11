@@ -38,10 +38,14 @@ pipeline {
 
         stage('documentation') {
             steps {
-                build job: 'Kano/components-doc/master', parameters: [
-                    text(name: 'repoUrl', value: 'https://github.com/KanoComponents/<%= name %>'),
-                    text(name: 'componentName', value: '<%= name %>')
-                ], wait: false
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        build job: 'Kano/components-doc/master', parameters: [
+                            text(name: 'repoUrl', value: 'https://github.com/KanoComponents/<%= name %>'),
+                            text(name: 'componentName', value: '<%= name %>')
+                        ], wait: false
+                    }
+                }
             }
         }
     }
