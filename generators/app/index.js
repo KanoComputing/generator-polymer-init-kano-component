@@ -73,6 +73,12 @@ module.exports = class extends Generator {
       this.destinationPath(`test/${elementName}_test.html`),
       this.props
     );
+
+    this.fs.copyTpl(
+      `${this.templatePath()}/common/**/*`,
+      this.destinationPath(),
+      this.props
+    );
   }
 
   install() {
