@@ -20,6 +20,9 @@ module.exports = class extends Generator {
       },{
         name: 'Polymer hybrid',
         value: 'polymer-hybrid'
+      },{
+        name: 'Polymer app component',
+        value: 'app-component'
       }],
       default: 'polymer-2.x'
     }, {
@@ -56,11 +59,13 @@ module.exports = class extends Generator {
       this.props
     );
 
-    // Copy dotfiles
-    this.fs.copy(
-      `${this.templatePath()}/${version}/.*`,
-      this.destinationRoot()
-    );
+    if (version !== 'app-component') {
+      // Copy dotfiles
+      this.fs.copy(
+        `${this.templatePath()}/${version}/.*`,
+        this.destinationRoot()
+      );
+    }
 
     this.fs.copyTpl(
       `${this.templatePath()}/${version}/_element.html`,
@@ -74,14 +79,19 @@ module.exports = class extends Generator {
       this.props
     );
 
-    this.fs.copyTpl(
-      `${this.templatePath()}/common/**/*`,
-      this.destinationPath(),
-      this.props
-    );
+    if (version !== 'app-component') {
+      this.fs.copyTpl(
+        `${this.templatePath()}/common/**/*`,
+        this.destinationPath(),
+        this.props
+      );
+    }
   }
 
   install() {
-    this.bowerInstall();
+    const version = this.props.version;
+    if (version !== 'app-component') {
+      this.bowerInstall();
+    }
   }
 };
