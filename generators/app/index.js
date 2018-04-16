@@ -60,10 +60,10 @@ module.exports = class extends Generator {
     );
 
     if (version !== 'app-component') {
-      // Copy dotfiles
+      // Copy gitignore
       this.fs.copy(
-        `${this.templatePath()}/${version}/.*`,
-        this.destinationRoot()
+        `${this.templatePath()}/${version}/_gitignore`,
+        this.destinationRoot('.gitignore')
       );
     }
 
