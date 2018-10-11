@@ -15,25 +15,18 @@ module.exports = class extends Generator {
       name: 'version',
       message: 'What type of element would you like to build?',
       choices: [{
-        name: 'Polymer 2.x',
-        value: 'polymer-2.x'
-      },{
-        name: 'Polymer hybrid',
-        value: 'polymer-hybrid'
+        name: 'Polymer 3.x',
+        value: 'polymer-3.x'
       },{
         name: 'Polymer app component',
         value: 'app-component'
       }],
-      default: 'polymer-2.x'
+      default: 'polymer-3.x'
     }, {
       type: 'input',
       name: 'name',
       message: 'What name should I give to your component?',
-      default: 'kano-component'
-    }, {
-      type: 'input',
-      name: 'description',
-      message: 'What is the purpose of this element? (description)'
+      default: 'kwc-component'
     }];
 
     return this.prompt(prompts).then(props => {
@@ -65,33 +58,34 @@ module.exports = class extends Generator {
         `${this.templatePath()}/${version}/_gitignore`,
         this.destinationPath('.gitignore')
       );
-    }
-
-    this.fs.copyTpl(
-      `${this.templatePath()}/${version}/_element.html`,
-      this.destinationPath(`${elementName}.html`),
-      this.props
-    );
-
-    this.fs.copyTpl(
-      `${this.templatePath()}/${version}/test/_element_test.html`,
-      this.destinationPath(`test/${elementName}_test.html`),
-      this.props
-    );
-
-    if (version !== 'app-component') {
+      this.fs.copy(
+        `${this.templatePath()}/${version}/_npmignore`,
+        this.destinationPath('.npmignore')
+      );
       this.fs.copyTpl(
-        `${this.templatePath()}/common/**/*`,
-        this.destinationPath(),
+        `${this.templatePath()}/${version}/test/_element.test.js`,
+        this.destinationPath(`test/${elementName}.test.js`),
         this.props
       );
     }
+
+    this.fs.copyTpl(
+      `${this.templatePath()}/${version}/_eslintrc.js`,
+      this.destinationPath('.eslintrc.js'),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      `${this.templatePath()}/${version}/_element.js`,
+      this.destinationPath(`${elementName}.js`),
+      this.props
+    );
   }
 
   install() {
     const version = this.props.version;
     if (version !== 'app-component') {
-      this.bowerInstall();
+      this.yarnInstall();
     }
   }
 };
